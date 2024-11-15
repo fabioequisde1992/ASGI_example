@@ -1,0 +1,17 @@
+db.sqlite3
+__pycache__/
+ven/
+migrations/
+staticfiles/
+.vscode/
+*.pyc
+*.pyo
+*.pass
+*.lnk
+# cargar_experiencia.txt
+# cargar_formacion.txt
+# Cargar_modelos.txt
+# cargar_proyecto.txt
+# superu.txt
+# settings.py
+# requirements.txt

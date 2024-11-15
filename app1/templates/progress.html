@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progreso</title>
+    <!-- Agregar Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const progressContainer = document.getElementById("progress-container");
+            const progressBar = document.getElementById("progress-bar");
+            const ws = new WebSocket("ws://127.0.0.1:8000/ws/progress/");
+
+            ws.onmessage = function (event) {
+                const data = JSON.parse(event.data);
+                // Mostrar el mensaje
+                progressContainer.innerHTML = `<p>${data.message}</p>`;
+                
+                // Actualizar la barra de progreso
+                if (data.progress !== undefined) {
+                    progressBar.style.width = data.progress + '%';
+                    progressBar.setAttribute('aria-valuenow', data.progress);
+                }
+            };
+
+            ws.onclose = function () {
+                console.log("Conexión cerrada.");
+            };
+        });
+    </script>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center">Progreso del proceso</h1>
+        
+        <div id="progress-container" class="mb-3 text-center">
+            <p>Esperando progreso...</p>
+        </div>
+        
+        <!-- Barra de Progreso con Bootstrap -->
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
+    <!-- Agregar Bootstrap JS y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
